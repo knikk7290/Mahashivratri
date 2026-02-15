@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Mahashivratri - Shiva Tandav</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:black;
+  overflow:hidden;
+  color:white;
+  text-align:center;
+}
+
+/* ===== Background Cosmic Effect ===== */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* ===== Main Container ===== */
+.container{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* Tandav Sanskrit Verse */
+.tandav{
+  font-size:1.4rem;
+  max-width:900px;
+  line-height:1.8;
+  color:#00eaff;
+  text-shadow:0 0 15px #00eaff;
+  animation:fadeIn 3s ease-in-out;
+}
+
+/* Happy Mahashivratri Text */
+.wish{
+  margin-top:40px;
+  font-size:3rem;
+  font-weight:800;
+  background:linear-gradient(90deg,#00eaff,#ffffff,#00eaff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 20px #00eaff; }
+  to{ text-shadow:0 0 60px #00eaff; }
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+.mantra{
+  margin-top:20px;
+  font-size:1.5rem;
+  opacity:0.8;
+}
+
+/* Button */
+button{
+  margin-top:30px;
+  padding:10px 25px;
+  border:none;
+  border-radius:25px;
+  background:#00eaff;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:white;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .wish{font-size:2rem;}
+  .tandav{font-size:1rem;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="container">
+
+  <div class="tandav">
+    जटाटवीगलज्जलप्रवाहपावितस्थले<br>
+    गलेऽवलम्ब्य लम्बितां भुजङ्गतुङ्गमालिकाम्।<br>
+    डमड्डमड्डमड्डमन्निनादवड्डमर्वयं<br>
+    चकार चण्डताण्डवं तनोतु नः शिवः शिवम्॥
+  </div>
+
+  <div class="wish">
+    🔱 Happy Mahashivratri 🔱
+  </div>
+
+  <div class="mantra">
+    Om Namah Shivaya 🙏
+  </div>
+
+  <button onclick="playTandav()">🔔 Play Shiva Tandav</button>
+
+</div>
+
+<!-- Add your Shiva Tandav MP3 link below -->
+<audio id="tandavAudio">
+  <source src="YOUR_SHIVA_TANDAV_AUDIO_LINK.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+/* ===== Cosmic Particle Background ===== */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles=[];
+
+class Particle{
+  constructor(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.size=Math.random()*2;
+    this.speed=Math.random()*1;
+  }
+  update(){
+    this.y-=this.speed;
+    if(this.y<0){
+      this.y=canvas.height;
+      this.x=Math.random()*canvas.width;
+    }
+  }
+  draw(){
+    ctx.fillStyle="rgba(0,234,255,0.7)";
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+for(let i=0;i<200;i++){
+  particles.push(new Particle());
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener("resize",()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
+
+/* ===== Play Tandav Audio ===== */
+function playTandav(){
+  document.getElementById("tandavAudio").play();
+}
+
+</script>
+
+</body>
+</html>
